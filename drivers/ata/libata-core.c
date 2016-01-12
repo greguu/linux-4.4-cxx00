@@ -60,6 +60,7 @@
 #include <linux/log2.h>
 #include <linux/slab.h>
 #include <linux/glob.h>
+#include <linux/leds.h>
 #include <scsi/scsi.h>
 #include <scsi/scsi_cmnd.h>
 #include <scsi/scsi_host.h>
@@ -4598,6 +4599,9 @@ static unsigned int ata_dev_init_params(struct ata_device *dev,
 void ata_sg_clean(struct ata_queued_cmd *qc)
 {
 	struct ata_port *ap = qc->ap;
+	/* Trigger the LED (if available) */
+	ledtrig_disk_activity();
+
 	struct scatterlist *sg = qc->sg;
 	int dir = qc->dma_dir;
 
