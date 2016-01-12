@@ -4599,9 +4599,6 @@ static unsigned int ata_dev_init_params(struct ata_device *dev,
 void ata_sg_clean(struct ata_queued_cmd *qc)
 {
 	struct ata_port *ap = qc->ap;
-	/* Trigger the LED (if available) */
-	ledtrig_disk_activity();
-
 	struct scatterlist *sg = qc->sg;
 	int dir = qc->dma_dir;
 
@@ -4819,6 +4816,9 @@ void ata_qc_free(struct ata_queued_cmd *qc)
 
 void __ata_qc_complete(struct ata_queued_cmd *qc)
 {
+	/* Trigger the LED (if available) */
+	ledtrig_disk_activity();
+
 	struct ata_port *ap;
 	struct ata_link *link;
 
